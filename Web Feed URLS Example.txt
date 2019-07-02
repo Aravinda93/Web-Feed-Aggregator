@@ -1,0 +1,25 @@
+https://www.bollywoodhungama.com/rss/news.xml
+https://www.cinemablend.com/rss/topic/news/movies
+https://www.fandango.com/rss/newmovies.rss
+https://www.metacritic.com/rss/movies
+https://movieweb.com/rss/movie-news/
+https://screenrant.com/feed/
+https://www.npr.org/rss/rss.php?id=1045
+https://www.fandango.com/rss/newmovies.rss
+http://www.metacritic.com/rss/movies
+https://www.rogerebert.com/feed
+http://www.movies.com/rss-feeds/movie-news-rss
+
+
+ATOM Web Feed:
+https://www.rogerebert.com/feed
+https://www.boxofficemojo.com/data/rss.php?file=topstories.xml
+
+
+SELECT * FROM TBL_WEB_FEED
+
+SELECT * FROM TBL_WEB_FEED_REFRESH
+ORDER BY ID DESC
+
+DELETE FROM TBL_WEB_FEED_REFRESH
+WHERE ID = 10758

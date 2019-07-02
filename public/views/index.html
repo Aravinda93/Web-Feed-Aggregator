@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!--Juery CDN and Bootstrap CDN-->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>	
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/jquery.jqgrid.min.js"></script>	
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>	
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-multiselect-widget/2.0.2/jquery.multiselect.js"></script>	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/redmond/jquery-ui.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/css/ui.jqgrid.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-multiselect-widget/2.0.2/jquery.multiselect.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+	<!--My JavaScripts Files-->
+	<script  type="text/javascript" src="javascript/Home_Script.js"></script>	
+	<!--My CSS Files <--></-->
+	<link rel="stylesheet" href="css/Home_Style.css">
+	<!-- Alertify CDN -->
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/alertify.min.js"></script>
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/css/alertify.min.css"/>
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/css/themes/default.min.css"/>
+	<!-- Date Range Picker--->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.css" />
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+	<title>Movies | News Feed</title>
+	<link rel="shortcut icon" type="image/png" href="http://icons.iconarchive.com/icons/hadezign/hobbies/128/Movies-icon.png"/>
+</head>	
+
+<body style="background-color:#E5E7E9">
+	<div class="custom-padding">
+	  <nav>
+	    <!-- <div class="logo">Movies|News</div> -->
+
+	    <ul class="menu-area">
+	      <li id="Web_Feed_Home" class="pull-left" title="Web Feed Data from Providers"><a style="color:#ffffff;cursor: pointer;"><h6>News | Entertainment</h6></a></li>
+	      <li id="Providers" title="Web Feed URL Provider Data"><a style="color:#ffffff;cursor: pointer;">Provider</a></li>
+	    </ul>
+	  </nav>
+	</div>
+	<br/>
+
+	<div class="container">
+		<div id="Web_Feed_View">
+			<div class="row">
+				<div class="col-md-6">
+					<h6 id="Label_1">Refresh Web Feed : </h6>
+				</div>
+				<div class="col-md-6">
+					<h6 id="Label_2" class="pull-right">Delete Old Records between : </h6>	
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-3">
+					<button type="button" class="btn btn-info" id="refresh_data" name="refresh_data" title="Refresh Database with new Data from the Web Feed"><i class="fa fa-refresh pull-left" aria-hidden="true"></i> Refresh</button>
+				</div>
+				<div class="col-md-1"></div>
+				<div class="col-md-5">
+					<p class="text-justify">Last Refreshed at : <b id="last_refresh"></b></p>
+				</div>	
+				<div class="col-md-3">
+					<input type="text" class="daterange form-control" title="Delete the Old Records which were Published b/w the dates"></input>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 text-center" id="Home_Jqgrid">
+					<div id="Loader_Logo" style="display:none;z-index:-999;">
+		         		<div class="lds-hourglass"></div>
+		         	</div>
+					<div id="home_div" class="jqGrid">
+						<table id="home_grid"></table>
+						<div id="home_pager"></div>
+					</div>
+					<div style="z-index:-1;">
+		            	<p id="No_Result" style="display:none">No Movie Data Found!! <br/> Please Try Clicking Refresh button</p>
+		         	</div>
+				</div>
+			</div>
+			<br/>
+			<div class="row" id="Refresh_Time">
+					<div class="col-md-4"></div>
+					<div class="col-md-3">
+						<input type="number" pattern="^[0-9]" min="2" class="form-control" id="Refresh_Time_Text" class="Refresh_Time_Text" placeholder="Set Refresh Time in Mins" title="Set time for the Automatic Refresh of the data">
+					</div>
+					<div class="col-md-1">
+						<button id="Refresh_Time_Button" type="button" class="btn btn-success">Set Time</button>
+					</div>
+					<div class="col-md-4"></div>
+			</div>
+		</div>
+		<div id="Provider_View">
+			<div class="row">
+				<div class="col-md-2"></div>
+				<div class="col-md-4">
+					<input type="text" class="form-control" id="New_Provider_Name" placeholder="Enter Provider Name" autocomplete="off">
+				</div>
+				<div class="col-md-4">
+					<input type="text" class="form-control" id="New_Provider_URL" placeholder="Enter Provider Feed URL" autocomplete="off">
+				</div>
+				<div class="col-md-2"></div>
+			</div>
+			<br/>
+			<div class="row">
+				<div class="col-md-4"></div>
+				<div class="col-md-4">
+					<div class="row">
+						<div class="col-md-4"></div>
+						<div class="col-md-3">
+							<button id="New_URL_Click" type="button" class="btn btn-success">Add URL</button>
+						</div>
+						<div class="col-md-3"></div>
+					</div>
+				</div>
+				<div class="col-md-3"></div>
+			</div>
+			<br/>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-10 text-center" id="Home_Jqgrid">
+					<div id="Loader_Logo1" style="display:none;z-index:-999;">
+		         		<div class="lds-hourglass"></div>
+		         	</div>
+					<div id="Provider_Div" class="jqGrid">
+						<table id="Provider_Grid"></table>
+						<div id="Provider_Pager"></div>
+					</div>
+					<div style="z-index:-1;">
+		            	<p id="Provider_Message" style="display:none">No Providers Found, Please Add Providers</p>
+		         	</div>
+				</div>
+				<div class="col-md-1"></div>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+	<!-- Modal For Modifying the Provider Information-->
+	<div id="Edit_Provider" class="modal fade" style="overflow-y: auto;">
+	    <div class="modal-dialog" style="max-height:90%;  margin-top: 5%; margin-bottom:5%;">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h4 class="modal-title">Edit Provider Information</h4>
+	                <button type="button" class="close" data-dismiss="modal">&times;</button>
+	            </div>
+	            
+	            <div class="modal-body">
+	                <form method="post" id="Provider_Edit">
+
+	                    <label>Provider Name*</label>
+	                    <textarea name="Provider_Name_Edit" id="Provider_Name_Edit" class="form-control" autocomplete="off" placeholder="Provider Name" required></textarea>
+	                    
+	                    <label>Provider URL*</label>
+	                    <textarea name="Provider_URL_Edit" id="Provider_URL_Edit" class="form-control" autocomplete="off" placeholder="Provider URL" required></textarea>
+	                   
+	                    <input type="hidden" name="Provider_Id" id="Provider_Id" value=1 class="form-control" readonly />
+			            
+			            <div class="modal-footer">
+			                <input type="submit" name="Edit_Submit_Provider" id="Edit_Submit_Provider" value="Save" class="btn btn-success" />
+			                <button type="button" class="btn btn-danger pull-right" data-dismiss="modal">Cancel</button>
+			            </div>
+	                </form>
+	       		</div>
+
+	   		</div>
+		</div>
+	</div>
+</html>
